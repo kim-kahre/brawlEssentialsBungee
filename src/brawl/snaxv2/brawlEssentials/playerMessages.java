@@ -19,15 +19,15 @@ public class playerMessages extends Command {
 	@Override
 	public void execute(CommandSender arg0, String[] arg1) {
 
-			ProxiedPlayer player = BungeeCord.getInstance().getPlayer(arg0.getName());
-			ProxiedPlayer p = BungeeCord.getInstance().getPlayer(arg1[0]);
-			if (p!=null) {
+			ProxiedPlayer og = BungeeCord.getInstance().getPlayer(arg0.getName());
+			ProxiedPlayer target = BungeeCord.getInstance().getPlayer(arg1[0]);
+			if (target!=null) {
     			 String message = "";
     			 for (int i = 0; i<arg1.length-1; i++) {
     				 message += arg1[i+1] + " ";
     			 }
-				player.sendMessage("[To] " + p.getName() + " > " + message);
-				p.sendMessage("[From] " + player.getName() + " > " + message);
+				og.sendMessage("[To] " + target.getName() + " > " + message);
+				target.sendMessage("[From] " + og.getName() + " > " + message);
 			}
 	}
 }

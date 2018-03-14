@@ -41,18 +41,20 @@ public class staffChat extends Command{
 		ProxiedPlayer player = BungeeCord.getInstance().getPlayer(arg0.getName());
 	      try {
 		         openConnection();
-			     Statement statement = connection.createStatement();
-		         ResultSet result = statement.executeQuery("SELECT * FROM rank WHERE UUID = '" +player.getUniqueId().toString() + "';");
+			     Statement rankQuery = connection.createStatement();
+		         ResultSet result = rankQuery.executeQuery("SELECT * FROM rank WHERE UUID = '" +player.getUniqueId().toString() + "';");
+		         //check if sender has perms
 		         if (result != null) {
 		        	 while(result.next()) {
 		        		 if (result.getInt("RANK") > 3) {
 		        			 for (ProxiedPlayer p : BungeeCord.getInstance().getPlayers()) {
 		        			      try {
-		        					     Statement statement2 = connection.createStatement();
-		        				         ResultSet result2 = statement2.executeQuery("SELECT * FROM rank WHERE UUID = '" +p.getUniqueId().toString() + "';");
-		        				         if (result2 != null) {
-		        				        	 while(result2.next()) {
-		        				        		 if (result2.getInt("RANK") > 3) {
+		        			    	  //check if reviecer has perms
+		        					     Statement recieverQuery = connection.createStatement();
+		        				         ResultSet recieverperms = recieverQuery.executeQuery("SELECT * FROM rank WHERE UUID = '" +p.getUniqueId().toString() + "';");
+		        				         if (recieverperms != null) {
+		        				        	 while(recieverperms.next()) {
+		        				        		 if (recieverperms.getInt("RANK") > 3) {
 		        				        			 String message = "";
 		        				        			 for (int i = 0; i<arg1.length; i++) {
 		        				        				 message += arg1[i] + " ";
